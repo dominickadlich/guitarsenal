@@ -28,8 +28,7 @@ class GuitarBasicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Guitar_Model
-        fields = ['brand', 'model', 'primary_photo']
-
+        fields = ['id', 'brand', 'model', 'primary_photo']
 
 class CurrentSetupSerializer(serializers.ModelSerializer):
     guitar = GuitarBasicSerializer(read_only=True)
