@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 function GuitarList() {
@@ -10,6 +11,7 @@ function GuitarList() {
         const fetchGuitars = async () => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/guitars/');
+                console.log('API Response:', response.data);
                 setGuitars(response.data);
                 setLoading(false);
             } catch (err) {
@@ -28,9 +30,14 @@ function GuitarList() {
         <div>
             {guitars.map(guitar => (
                 <div key={guitar.id}>
-                    <h3>{guitar.brand} {guitar.model}</h3>
+                    <div className="guitar-card">
+                        <Link to={`/guitars/${guitar.id}`}>
+                            {guitar.brand} {guitar.model}
+                        </Link>
+                    </div>
                     {guitar.primary_photo && <img src={guitar.primary_photo} alt="Guitar" />}
                 </div>
+                
             ))}
         </div>
     );
