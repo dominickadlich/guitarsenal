@@ -35,7 +35,7 @@ function GuitarList() {
                             {guitar.brand} {guitar.model}
                         </Link>
                     </div>
-                    {guitar.primary_photo && <img src={guitar.primary_photo} alt="Guitar" />}
+                    {guitar.primary_photo && <img src={`http://127.0.0.1:8000${guitar.primary_photo}`} alt={`${guitar.brand} ${guitar.model}`}/>}
                 </div>
                 
             ))}

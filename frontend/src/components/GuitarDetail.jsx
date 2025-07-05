@@ -34,7 +34,7 @@ function GuitarDetail() {
             <ul>
                 <li>{guitar.brand} {guitar.model}</li>
                 <li>Serial: {guitar.serial_number}</li>
-                <li>Price: {guitar.purchase_price}</li>
+                <li>Price: ${guitar.purchase_price}</li>
                 <li>Strings: {guitar.number_of_strings}</li>
             </ul>
 
