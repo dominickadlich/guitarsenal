@@ -28,7 +28,7 @@ class Current_Setup(models.Model):
 
 class Guitar_Pictures(models.Model):
     guitar = models.ForeignKey(Guitar_Model, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='guitar_photos/')
+    image = models.ImageField(default='fallback.png', blank=True, upload_to='guitar_photos/')
     caption = models.CharField(max_length=200, blank=True)
     is_primary = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
