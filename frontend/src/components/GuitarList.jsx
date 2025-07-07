@@ -29,20 +29,18 @@ function GuitarList() {
     return (
         <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {guitars.map(guitar => (
-                <div key={guitar.id} className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm">
-                    <div className="px-4 py-5 sm:px-6">
+                <div key={guitar.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <Link to={`/guitars/${guitar.id}`}>
+                        {guitar.primary_photo && 
+                            <img src={`http://127.0.0.1:8000${guitar.primary_photo}`}
+                            className="h-48 w-96 object-cover rounded"
+                            alt={`${guitar.brand} ${guitar.model}`}/>}
+                    </Link>
+                    <div className="p-5">
                         <Link to={`/guitars/${guitar.id}`}>
-                            {guitar.brand} {guitar.model}
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{guitar.brand} {guitar.model}</h5>
                         </Link>   
                     </div>                
-                    <div className="px-4 py-5 sm:p-6">
-                        <Link to={`/guitars/${guitar.id}`}>
-                            {guitar.primary_photo && 
-                                <img src={`http://127.0.0.1:8000${guitar.primary_photo}`}
-                                className="mx-auto size-32 shrink-0 rounded-lg"
-                                alt={`${guitar.brand} ${guitar.model}`}/>}
-                        </Link>
-                    </div>  
                 </div>
             ))}
         </ul>

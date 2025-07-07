@@ -1,28 +1,24 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import './App.css'
+// import './App.css'
 
-import GuitarList from "./components/GuitarList"
-import GuitarDetail from "./components/GuitarDetail"
+import GuitarList from "./components/GuitarList";
+import GuitarDetail from "./components/GuitarDetail";
+import Header from "./components/Header";
 
 function App() {
   return (
     <>
       <Router>
-        <nav className="navbar">
-          <ul className="nav-list">
-            <li className="nav-item">
-              <Link to="/guitars">Home</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <div>
-          <Routes>
-            <Route path="/" element={<Navigate to="/guitars" replace />} />
-            <Route path="/guitars" element={<GuitarList />} />
-            <Route path="/guitars/:id" element={<GuitarDetail />} />
-          </Routes>
+        <div className="min-h-screen bg-gray-800">
+          <Header />
+          <main className="container mx-auto px-4 py-8">
+            <Routes>
+              <Route path="/" element={<Navigate to="/guitars" replace />} />
+              <Route path="/guitars" element={<GuitarList />} />
+              <Route path="/guitars/:id" element={<GuitarDetail />} />
+            </Routes>
+          </main>
         </div>
       </Router>
     </>
