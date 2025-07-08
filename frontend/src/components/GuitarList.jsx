@@ -1,27 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import useFetch from "./useFetch";
 
 function GuitarList() {
-    const [guitars, setGuitars] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchGuitars = async () => {
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/guitars/');
-                console.log('API Response:', response.data);
-                setGuitars(response.data);
-                setLoading(false);
-            } catch (err) {
-                setError('Failed to load guitars');
-                setLoading(false)
-            }
-        };
-
-        fetchGuitars();
-    }, []);
+    const url = "http://127.0.0.1:8000/guitars/"
+    const { data: guitars, loading, error } = useFetch(url)
 
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
