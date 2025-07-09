@@ -13,6 +13,7 @@ import { HeartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
+import SetupTable from './SetupTable';
 
 function GuitarDetail() {
     const { id } = useParams();
@@ -43,19 +44,10 @@ function GuitarDetail() {
                                 Additional details
                                 </h2>
                 
-                                <div className="divide-y divide-gray-200 border-t border-gray-200">
-                                    <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-700 marker:text-gray-300">
-                                        {guitar.setup_history?.map((setup) => (
-                                            <div key={setup.id} className="pl-2">
-                                                <li>Tuning: {setup.tuning}</li>
-                                                <li>Strings: {setup.string_brand}</li>
-                                                <li>Gauge: {setup.string_gauge}</li>
-                                                <li>Last String Change: {setup.string_change_date}</li>
-                                            </div>
-                                        ))}
-                                    </ul>
-                                </div>
+                                {/* TODO: Additional details: body wood, neck wood, fretboard, pickups, etc. ***Need new model before implementation*** */}
                             </section>
+
+                            <SetupTable />
                         </div>
                     </div>
                 </div>
