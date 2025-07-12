@@ -1,18 +1,53 @@
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import InputGroup from "./InputGroup";
+import SubmitButton from "./SubmitButton";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function NewGuitarForm() {
 
-async function storeFeedback(prevState, formData) {
-    const feedbackMessage = {
+async function saveGuitarDetails(prevState, formData) {
+    const url = 'http://127.0.0.1:8000/guitars/';
+    const guitarDetail = {
       brand: formData.get('brand'),
       model: formData.get('model'),
       serial_number: formData.get('serial_number'),
       purchase_date: formData.get('purchase_date'),
       purchase_price: formData.get('purchase_price'),
       number_of_strings: formData.get('number_of_strings')
-    };
-}
+     };
+
+    const newErrors = {};
+
+    if (!guitarDetail.brand?.trim()) {
+        newErrors.brand = 'Please specify a brand.'
+    }
+    if (!guitarDetail.model?.trim()) {
+        newErrors.model = 'Please specify a model.'
+    }
+    if (!guitarDetail.number_of_strings?.trim()) {
+        newErrors.number_of_strings = 'Please specify the number of strings.'
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+        return { errors: newErrors };
+    }
+
+    const response = axios.post(url, guitarDetail)
+
+    return { success: true };
+};
+
+function NewGuitarForm() {
+    const navigate = useNavigate();
+    const [formState, formAction] = useActionState(saveGuitarDetails, {
+        errors: {},
+    });
+
+    useEffect(() => {
+        if (formState.success) {
+            navigate('/guitars');
+        }
+    }, [formState.success, navigate])
 
     const formFields = [
         {
@@ -62,22 +97,30 @@ async function storeFeedback(prevState, formData) {
             placeholder: '6',
             required: true
         },
-];
+    ];
 
     return (
-        <div>
-            {formFields.map((field) => (
-                <InputGroup 
-                    id={field.id}
-                    name={field.brand}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    value={field.value}
-                    onChange={onChange}
-                    required={required}
-                />
-            ))}
-        </div>
+        <>
+            <form action={formAction}>
+                    {formFields.map((field) => (
+                    <div className="pt-6">
+                        <InputGroup 
+                            key={field.id}
+                            id={field.id}
+                            name={field.name}
+                            type={field.type}
+                            label={field.label} 
+                            placeholder={field.placeholder}
+                            required={field.required}
+                            error={formState.errors?.[field.name]}
+                        />
+                    </div>
+                    ))}
+                <div className="pt-6">
+                    <SubmitButton onClick={navigate}/>
+                </div>
+            </form>
+        </>
     )
 }
 

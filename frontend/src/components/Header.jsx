@@ -8,7 +8,7 @@ import guitarsenalLogo from '../assets/guitars.png'
 import { Link } from 'react-router-dom'
 
 const navigation = [
-  { name: 'Add Guitar', href: '/guitars' },
+  { name: 'Add Guitar', href: '/guitars/new' },
   { name: 'Features', href: '#' },
   { name: 'Marketplace', href: '#' },
   { name: 'Company', href: '#' },
