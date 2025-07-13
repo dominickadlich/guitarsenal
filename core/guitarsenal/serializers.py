@@ -42,3 +42,4 @@ class GuitarPicturesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Guitar_Pictures
         fields = '__all__'
+        read_only_fields = ['guitar']
