@@ -13,7 +13,7 @@ function App() {
       <Router>
         <div className="min-h-screen bg-gray-900">
           <Header />
-          <main className="container mx-auto px-4 py-8">
+          <main className="container mx-auto px-4 py-4">
             <Routes>
               <Route path="/" element={<Navigate to="/guitars" replace />} />
               <Route path="/guitars" element={<GuitarList />} /> {/* One to list guitars */}

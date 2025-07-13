@@ -1,16 +1,13 @@
 import { useActionState, useEffect, useState } from "react";
-import InputGroup from "./InputGroup";
-import SubmitButton from "./SubmitButton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import InputGroup from "./InputGroup";
+import SubmitButton from "./SubmitButton";
 import InputMedia from "./InputMedia";
 
 
 async function saveGuitarDetails(prevState, formData) {
     const url = 'http://127.0.0.1:8000/guitars/';
-    const imageFiles = formData.getAll('images')
-    console.log('Image files:', imageFiles)
-
     const guitarDetail = {
       brand: formData.get('brand'),
       model: formData.get('model'),
@@ -37,36 +34,7 @@ async function saveGuitarDetails(prevState, formData) {
     }
 
     try {
-        const guitarResponse = await axios.post(url, guitarDetail);
-        const guitarId = guitarResponse.data.id;
-
-        const imageFiles = formData.getAll('images');
-
-        if (imageFiles.length > 0) {
-            console.log(`Found ${imageFiles.length} images to upload`);
-
-            for (let i = 0; i < imageFiles.length; i++) {
-                const imageFile = imageFiles[i];
-                console.log('Processing file:', imageFile.name, imageFile.size);
-
-                if (imageFile.size > 0) {
-                    console.log(`About to upload:`, imageFile.name);
-
-                    const imageFormData = new FormData();
-                    imageFormData.append('image', imageFile);
-                    imageFormData.append('is_primary', i === 0);
-
-                    try {
-                        const response = await axios.post(`http://127.0.0.1:8000/guitars/${guitarId}/photos/`, imageFormData, {
-                            headers: { 'Content-Type': 'multipart/form-data' }
-                        });
-                        console.log('Upload successful:', response.data);
-                    } catch (error) {
-                        console.error('Upload failed:', error.response?.data); 
-                    }
-                }
-            }
-        }
+        const response = await axios.post(url, guitarDetail)
         return { success: true };
     } catch (error) {
         return {
@@ -141,30 +109,28 @@ function NewGuitarForm() {
 
     return (
         <>
-            <div className="flex items-center justify-center">
-                <form action={formAction}>
-                        {formFields.map((field) => (
-                            <div key={field.id} className="pt-6">
-                                <InputGroup 
-                                    id={field.id}
-                                    name={field.name}
-                                    type={field.type}
-                                    label={field.label} 
-                                    placeholder={field.placeholder}
-                                    required={field.required}
-                                    error={formState.errors?.[field.name]}
-                                />
-                            </div>
-                        ))}
+            <form action={formAction}>
+                    {formFields.map((field) => (
+                        <div key={field.id} className="pt-6">
+                            <InputGroup 
+                                id={field.id}
+                                name={field.name}
+                                type={field.type}
+                                label={field.label} 
+                                placeholder={field.placeholder}
+                                required={field.required}
+                                error={formState.errors?.[field.name]}
+                            />
+                        </div>
+                    ))}
 
-                    <div className="pt-6">
-                        <InputMedia />
-                    </div>
-                    <div className="pt-6">
-                        <SubmitButton />
-                    </div>
-                </form>
-            </div>
+                <div className="pt-6">
+                    <InputMedia />
+                </div>
+                <div className="pt-6">
+                    <SubmitButton />
+                </div>
+            </form>
         </>
     )
 }
