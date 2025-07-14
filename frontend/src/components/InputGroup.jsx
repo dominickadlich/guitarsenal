@@ -1,6 +1,6 @@
 import { ExclamationCircleIcon } from '@heroicons/react/16/solid'
 
-function InputGroup({ htmlFor, id, name, type, label, placeholder, value, onChange, required = false, error }) {
+function InputGroup({ htmlFor, id, name, type, label, placeholder, value, onChange, required = false, error, defaultValue }) {
     return (
         <>
             <div>
@@ -16,6 +16,7 @@ function InputGroup({ htmlFor, id, name, type, label, placeholder, value, onChan
                     value={value}
                     onChange={onChange}
                     required={required}
+                    defaultValue={defaultValue}
                     className={`block w-125 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 ${
                         error
                             ? 'outline-red-300 focus:outline-red-600' 

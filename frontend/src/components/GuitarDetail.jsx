@@ -10,6 +10,7 @@ import {
 } from '@headlessui/react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { HeartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom';
 
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
@@ -64,12 +65,26 @@ function GuitarDetail() {
                         
                         {/* Product info */}
                         <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-                            <h1 className="text-3xl font-bold tracking-tight text-gray-900">{guitar.brand} {guitar.model} {guitar.number_of_strings}</h1>
+                            <div className="columns-2">
+                                <h1 className="text-3xl font-bold tracking-tight text-gray-900">{guitar.brand} {guitar.model} {guitar.number_of_strings}</h1>
+
+                                <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex justify-end">
+                                        <button
+                                        type="button"
+                                        className="block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                                        >
+                                     <Link to={`/guitars/${guitar.id}/edit`}>
+                                        Edit Guitar
+                                    </Link>
+                                        </button>
+                                </div>
+                            </div>
 
                             <div className="mt-3">
                             <h2 className="sr-only">Product information</h2>
                             <p className="text-3xl tracking-tight text-gray-900">${guitar.purchase_price}</p>
                             </div>
+
 
                             <section aria-labelledby="details-heading" className="mt-12">
                                 <h2 id="details-heading" className="sr-only">
