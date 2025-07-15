@@ -102,11 +102,11 @@ function EditGuitarForm() {
     if (error) return <div>Error: {error}</div>
     if (!guitar || !guitar.id) return <div>Guitar not found</div>;
 
-    console.log('Guitar data:', guitar);
-    console.log('Loading:', loading);
-    console.log('Error:', error);
+    // console.log('Guitar data:', guitar);
+    // console.log('Loading:', loading);
+    // console.log('Error:', error);
 
-    console.log('Brand defaultValue:', guitar.brand || '');
+    // console.log('Brand defaultValue:', guitar.brand || '');
 
 
     const formFields = [

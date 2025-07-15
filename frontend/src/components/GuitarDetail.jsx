@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import SetupTable from './SetupTable';
+import DeleteGuitar from './DeleteGuitar';
 
 function GuitarDetail() {
     const { id } = useParams();
@@ -69,20 +70,20 @@ function GuitarDetail() {
                                 <h1 className="text-3xl font-bold tracking-tight text-gray-900">{guitar.brand} {guitar.model} {guitar.number_of_strings}</h1>
 
                                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex justify-end">
+                                    <Link to={`/guitars/${guitar.id}/edit`}>
                                         <button
                                         type="button"
                                         className="block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                                         >
-                                     <Link to={`/guitars/${guitar.id}/edit`}>
                                         Edit Guitar
-                                    </Link>
                                         </button>
+                                    </Link>
                                 </div>
                             </div>
 
                             <div className="mt-3">
                             <h2 className="sr-only">Product information</h2>
-                            <p className="text-3xl tracking-tight text-gray-900">${guitar.purchase_price}</p>
+                            {/* <p className="text-3xl tracking-tight text-gray-900">${guitar.purchase_price}</p> */}
                             </div>
 
 
@@ -95,6 +96,12 @@ function GuitarDetail() {
                             </section>
 
                             <SetupTable />
+                            
+                            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex pt-6 justify-end">
+                                <DeleteGuitar
+                                    guitar = { guitar }
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
