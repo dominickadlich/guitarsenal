@@ -9,6 +9,14 @@ class Guitar_Model(models.Model):
     purchase_date = models.DateField(blank=True, null=True)
     purchase_price = models.DecimalField(validators=[MinValueValidator(0.1, message="Price must be greater than 0!")], max_digits=8, decimal_places=2, blank=True, null=True)
     number_of_strings = models.PositiveIntegerField(validators=[MinValueValidator(6, message="Must have at least 6 strings!")])
+    body_wood = models.CharField(max_length=100, blank=True, null=True)
+    top_wood = models.CharField(max_length=100, blank=True, null=True)
+    neck_wood = models.CharField(max_length=100, blank=True, null=True)
+    fretboard_wood = models.CharField(max_length=100, blank=True, null=True)
+    scale_length = models.CharField(max_length=100, blank=True, null=True)
+    num_frets = models.CharField(max_length=100, blank=True, null=True)
+    pickup_model = models.CharField(max_length=100, blank=True, null=True)
+    additional_features = models.TextField(blank=True, null=True)
 
 
     def __str__(self):
@@ -34,6 +42,4 @@ class Guitar_Pictures(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
- # Physical: body_type, neck_type, scale_length, num_frets
-    # body_type = models.CharField(max_length=100, blank=True)
-    # neck_type = models.CharField(max_length=100, blank=True)
+    
