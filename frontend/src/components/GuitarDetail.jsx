@@ -16,10 +16,12 @@ import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import SetupTable from './SetupTable';
 import DeleteGuitar from './DeleteGuitar';
+import { API_BASE_URL, GUITAR_ENDPOINTS, guitarSpecs } from '../constants';
 
 function GuitarDetail() {
     const { id } = useParams();
-    const url = `http://127.0.0.1:8000/guitars/${id}`;
+    const url = `${API_BASE_URL}${GUITAR_ENDPOINTS.detail(id)}`;
+    // console.log(url)
     const { data: guitar, loading, error } = useFetch(url)
 
     if (loading) return <div>Loading...</div>
@@ -44,7 +46,7 @@ function GuitarDetail() {
                                         >
                                         <span className="sr-only">{photo.name}</span>
                                         <span className="absolute inset-0 overflow-hidden rounded-md">
-                                            <img alt="" src={`http://127.0.0.1:8000${photo.image}`} className="size-full object-cover" />
+                                            <img alt={photo.name} src={`${API_BASE_URL}${photo.image}`} className="size-full object-cover" />
                                         </span>
                                         <span
                                             aria-hidden="true"
@@ -58,7 +60,7 @@ function GuitarDetail() {
                             <TabPanels>
                                 {guitar.photos.map((photo) => (
                                 <TabPanel key={photo.id}>
-                                    <img alt={photo.name} src={`http://127.0.0.1:8000${photo.image}`} className="aspect-square w-full object-cover sm:rounded-lg" />
+                                    <img alt={photo.name} src={`${API_BASE_URL}${photo.image}`} className="aspect-square w-full object-cover sm:rounded-lg" />
                                 </TabPanel>
                                 ))}
                             </TabPanels>
@@ -83,25 +85,44 @@ function GuitarDetail() {
 
                             <div className="mt-3">
                             <h2 className="sr-only">Product information</h2>
-                            {/* <p className="text-3xl tracking-tight text-gray-900">${guitar.purchase_price}</p> */}
+                            <p className="text-3xl tracking-tight text-gray-900">${guitar.purchase_price}</p>
                             </div>
 
 
                             <section aria-labelledby="details-heading" className="mt-12">
                                 <h2 id="details-heading" className="sr-only">
-                                Additional details
+                                Specs
                                 </h2>
                 
                                 {/* TODO: Additional details: body wood, neck wood, fretboard, pickups, etc. ***Need new model before implementation*** */}
+                                <div className="mt-2">
+                                    {guitarSpecs.map((spec) => (
+                                        // guitar[spec.key] && ( 
+                                            <div key={spec.key} className="flex justify-between py-2 border-b border-gray-200">
+                                                <span className="text-sm font-medium text-gray-900">{spec.label}:</span>
+                                                <span className="text-sm text-gray-500">{guitar[spec.key]}</span>
+                                            </div>
+                                        // )
+                                    ))}
+                                </div>
+                                {guitar.additional_features && (
+                                    <div className="mt-6">
+                                        <h3 className="text-md font-medium text-gray-900 mb-2">Additional Features</h3>
+                                        <p className="text-sm text-gray-500">{guitar.additional_features}</p>
+                                    </div>
+                                )}
                             </section>
 
-                            <SetupTable />
-                            
                             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex pt-6 justify-end">
                                 <DeleteGuitar
                                     guitar = { guitar }
                                 />
                             </div>
+
+                            <div className='py-6'>
+                                <SetupTable />
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

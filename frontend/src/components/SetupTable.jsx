@@ -1,16 +1,17 @@
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
+import { API_BASE_URL, GUITAR_ENDPOINTS, guitarSpecs } from '../constants';
 
 function SetupTable() {
   const { id } = useParams();
-  const url = `http://127.0.0.1:8000/guitars/${id}`;
+  const url = `${API_BASE_URL}${GUITAR_ENDPOINTS.detail(id)}`;
   const { data: guitar, loading, error } = useFetch(url)
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
 
   return (
-    <div className="bg-gray-900">
+    <div className="bg-gray-900 block rounded-md overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <div className="bg-gray-900 py-10">
           <div className="px-4 sm:px-6 lg:px-8">

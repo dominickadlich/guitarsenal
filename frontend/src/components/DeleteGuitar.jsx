@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
+import { API_BASE_URL ,GUITAR_ENDPOINTS } from "../constants";
+
 
 function DeleteGuitar({ guitar }) {
     const navigate = useNavigate();
@@ -17,7 +19,7 @@ function DeleteGuitar({ guitar }) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-        await axios.delete(`http://127.0.0.1:8000/guitars/${guitar.id}/`);
+        await axios.delete(`${API_BASE_URL}${GUITAR_ENDPOINTS.detail(guitarId)}`);
         navigate('/guitars');
     } catch (error) {
         console.error('Delete failed:', error);

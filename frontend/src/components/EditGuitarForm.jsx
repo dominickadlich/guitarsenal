@@ -6,11 +6,11 @@ import InputMedia from "./InputMedia";
 import { useEffect, useState, useActionState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { guitarFormFields ,API_BASE_URL ,GUITAR_ENDPOINTS } from "../constants";
 
 async function updateGuitarDetails(prevState, formData) {
     const guitarId = formData.get('guitarId');
-    const url = `http://127.0.0.1:8000/guitars/${guitarId}/`;
+    const url = `${API_BASE_URL}${GUITAR_ENDPOINTS.detail(guitarId)}`;
     const imageFiles = formData.getAll('images')
     console.log('Image files:', imageFiles)
 
@@ -20,7 +20,15 @@ async function updateGuitarDetails(prevState, formData) {
       serial_number: formData.get('serial_number'),
       purchase_date: formData.get('purchase_date'),
       purchase_price: formData.get('purchase_price'),
-      number_of_strings: formData.get('number_of_strings')
+      number_of_strings: formData.get('number_of_strings'),
+      body_wood: formData.get('body_wood'),
+      top_wood: formData.get('top_wood'),
+      neck_wood: formData.get('neck_wood'),
+      fretboard_wood: formData.get('fretboard_wood'),
+      scale_length: formData.get('scale_length'),
+      num_frets: formData.get('num_frets'),
+      pickup_model: formData.get('pickup_model'),
+      additional_features: formData.get('additional_features')
      };
 
     const newErrors = {};
@@ -40,8 +48,7 @@ async function updateGuitarDetails(prevState, formData) {
     }
 
     try {
-        const guitarResponse = await axios.put(url, guitarDetail);
-        const guitarId = guitarResponse.data.id;
+        const guitarResponse = await axios.put(`${API_BASE_URL}${GUITAR_ENDPOINTS.detail(guitarId)}`, guitarDetail);
 
         const imageFiles = formData.getAll('images');
 
@@ -60,7 +67,7 @@ async function updateGuitarDetails(prevState, formData) {
                     imageFormData.append('is_primary', i === 0);
 
                     try {
-                        const response = await axios.post(`http://127.0.0.1:8000/guitars/${guitarId}/photos/`, imageFormData, {
+                        const response = await axios.post(`${API_BASE_URL}${GUITAR_ENDPOINTS.photos(guitarId)}`, imageFormData, {
                             headers: { 'Content-Type': 'multipart/form-data' }
                         });
                         console.log('Upload successful:', response.data);
@@ -83,8 +90,9 @@ async function updateGuitarDetails(prevState, formData) {
 
 function EditGuitarForm() {
     const { id } = useParams();
-    const url = `http://127.0.0.1:8000/guitars/${id}`;
+    const url = `${API_BASE_URL}${GUITAR_ENDPOINTS.detail(id)}`;
     const { data: guitar, loading, error } = useFetch(url)
+    console.log(url)
 
 
     const navigate = useNavigate();
@@ -102,90 +110,22 @@ function EditGuitarForm() {
     if (error) return <div>Error: {error}</div>
     if (!guitar || !guitar.id) return <div>Guitar not found</div>;
 
-    // console.log('Guitar data:', guitar);
-    // console.log('Loading:', loading);
-    // console.log('Error:', error);
-
-    // console.log('Brand defaultValue:', guitar.brand || '');
-
-
-    const formFields = [
-        {
-            id: 'brand',
-            name: 'brand',
-            type: 'text',
-            label: 'Brand',
-            placeholder: 'Fender, Gibson, etc.',
-            required: true
-        },
-        {
-            id: 'model',
-            name: 'model', 
-            type: 'text',
-            label: 'Model',
-            placeholder: 'Stratocaster, Les Paul, etc.',
-            required: true
-        },
-        {
-            id: 'serial_number',
-            name: 'serial_number',
-            type: 'text', 
-            label: 'Serial Number',
-            placeholder: 'ABC123456',
-            required: false
-        },
-        {
-            id: 'purchase_date',
-            name: 'purchase_date',
-            type: 'date',
-            label: 'Purchase Date',
-            required: false
-        },
-        {
-            id: 'purchase_price',
-            name: 'purchase_price',
-            type: 'number',
-            label: 'Purchase Price',
-            placeholder: '1299.99',
-            required: false
-        },
-        {
-            id: 'number_of_strings',
-            name: 'number_of_strings',
-            type: 'number',
-            label: 'Number of Strings',
-            placeholder: '6',
-            required: true
-        },
-    ];
-
-    // console.log('Guitar object keys:', Object.keys(guitar));
-    // console.log('Form field names:', formFields.map(f => f.name));
-
-    // console.log('guitar.brand:', guitar.brand);
-    // console.log('guitar.model:', guitar.model);
-
     return (
         <>
             <div className="flex items-center justify-center">
                 <form action={formAction}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <input type="hidden" name="guitarId" value={id} />
-
-                    {formFields.map((field) => (
-                        <div key={field.id} className="pt-6">
+                    {guitarFormFields.map((field) => (
+                        <div key={field.id}>
                             <InputGroup 
-                                id={field.id}
-                                name={field.name}
-                                type={field.type}
-                                label={field.label} 
-                                placeholder={field.placeholder}
-                                required={field.required}
+                                {...field}
                                 defaultValue={guitar[field.name] || ''}
                                 error={formState.errors?.[field.name]}
                             />
                         </div>
                     ))}
-
+                    </div>
                     <div className="pt-6">
                         <InputMedia />
                     </div>
