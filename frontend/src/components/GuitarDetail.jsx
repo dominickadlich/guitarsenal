@@ -17,6 +17,7 @@ import useFetch from "./useFetch";
 import SetupTable from './SetupTable';
 import DeleteGuitar from './DeleteGuitar';
 import { API_BASE_URL, GUITAR_ENDPOINTS, guitarSpecs } from '../constants';
+import PhotoLightbox from './PhotoLightbox';
 
 function GuitarDetail() {
     const { id } = useParams();
@@ -60,7 +61,7 @@ function GuitarDetail() {
                             <TabPanels>
                                 {guitar.photos.map((photo) => (
                                 <TabPanel key={photo.id}>
-                                    <img alt={photo.name} src={`${API_BASE_URL}${photo.image}`} className="aspect-square w-full object-cover sm:rounded-lg" />
+                                    <PhotoLightbox photo={photo} API_BASE_URL={API_BASE_URL} />
                                 </TabPanel>
                                 ))}
                             </TabPanels>
@@ -94,7 +95,6 @@ function GuitarDetail() {
                                 Specs
                                 </h2>
                 
-                                {/* TODO: Additional details: body wood, neck wood, fretboard, pickups, etc. ***Need new model before implementation*** */}
                                 <div className="mt-2">
                                     {guitarSpecs.map((spec) => (
                                         // guitar[spec.key] && ( 
