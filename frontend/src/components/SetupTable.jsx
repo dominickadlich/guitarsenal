@@ -47,7 +47,7 @@ function SetupTable() {
                           Gauge
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                          Last Change
+                          Date
                         </th>
                         <th scope="col" className="relative py-3.5 pr-4 pl-3 sm:pr-0">
                           <span className="sr-only">Edit</span>

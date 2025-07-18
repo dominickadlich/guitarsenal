@@ -18,12 +18,20 @@ import SetupTable from './SetupTable';
 import DeleteGuitar from './DeleteGuitar';
 import { API_BASE_URL, GUITAR_ENDPOINTS, guitarSpecs } from '../constants';
 import PhotoLightbox from './PhotoLightbox';
+import { useState } from 'react'
 
 function GuitarDetail() {
     const { id } = useParams();
     const url = `${API_BASE_URL}${GUITAR_ENDPOINTS.detail(id)}`;
     // console.log(url)
-    const { data: guitar, loading, error } = useFetch(url)
+    const { data: guitar, loading, error } = useFetch(url);
+    const [lightBoxOpen, setLightBoxOpen] = useState(false);
+    const [startIndex, setStartIndex] = useState(0);
+
+    const openLightBox = (photoIndex) => {
+        setStartIndex(photoIndex);
+        setLightBoxOpen(true);
+    }
 
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
@@ -31,7 +39,7 @@ function GuitarDetail() {
 
     return (
         <>
-            <div className="bg-white">
+            <div>
                 <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                     <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
 
@@ -59,18 +67,32 @@ function GuitarDetail() {
                             </div>
                 
                             <TabPanels>
-                                {guitar.photos.map((photo) => (
+                                {guitar.photos.map((photo, index) => (
                                 <TabPanel key={photo.id}>
-                                    <PhotoLightbox photo={photo} API_BASE_URL={API_BASE_URL} />
+                                    <img
+                                        // alt={photo.name}
+                                        src={`${API_BASE_URL}${photo.image}`}
+                                        className="aspect-square w-full object-cover sm:rounded-lg cursor-pointer hover:opacity-90"
+                                        onClick={() => openLightBox(index)} 
+                                    />
                                 </TabPanel>
                                 ))}
                             </TabPanels>
                         </TabGroup>
+                        {lightBoxOpen && 
+                            <PhotoLightbox 
+                                photos={guitar.photos} 
+                                initialPhotoIndex={startIndex}
+                                API_BASE_URL={API_BASE_URL} 
+                                open={lightBoxOpen}
+                                onClose={() => setLightBoxOpen(false)}
+                            />
+                        }
                         
                         {/* Product info */}
                         <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
                             <div className="columns-2">
-                                <h1 className="text-3xl font-bold tracking-tight text-gray-900">{guitar.brand} {guitar.model} {guitar.number_of_strings}</h1>
+                                <h1 className="text-3xl font-bold tracking-tight text-white">{guitar.brand} {guitar.model} {guitar.number_of_strings}</h1>
 
                                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex justify-end">
                                     <Link to={`/guitars/${guitar.id}/edit`}>
@@ -86,7 +108,7 @@ function GuitarDetail() {
 
                             <div className="mt-3">
                             <h2 className="sr-only">Product information</h2>
-                            <p className="text-3xl tracking-tight text-gray-900">${guitar.purchase_price}</p>
+                            <p className="text-3xl tracking-tight text-white">${guitar.purchase_price}</p>
                             </div>
 
 
@@ -99,28 +121,28 @@ function GuitarDetail() {
                                     {guitarSpecs.map((spec) => (
                                         // guitar[spec.key] && ( 
                                             <div key={spec.key} className="flex justify-between py-2 border-b border-gray-200">
-                                                <span className="text-sm font-medium text-gray-900">{spec.label}:</span>
-                                                <span className="text-sm text-gray-500">{guitar[spec.key]}</span>
+                                                <span className="text-sm font-medium text-white">{spec.label}:</span>
+                                                <span className="text-sm text-white">{guitar[spec.key]}</span>
                                             </div>
                                         // )
                                     ))}
                                 </div>
                                 {guitar.additional_features && (
                                     <div className="mt-6">
-                                        <h3 className="text-md font-medium text-gray-900 mb-2">Additional Features</h3>
-                                        <p className="text-sm text-gray-500">{guitar.additional_features}</p>
+                                        <h3 className="text-md font-medium text-white mb-2">Additional Features</h3>
+                                        <p className="text-sm text-white">{guitar.additional_features}</p>
                                     </div>
                                 )}
                             </section>
 
+                            <div className='py-6'>
+                                <SetupTable />
+                            </div>
+                            
                             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex pt-6 justify-end">
                                 <DeleteGuitar
                                     guitar = { guitar }
                                 />
-                            </div>
-
-                            <div className='py-6'>
-                                <SetupTable />
                             </div>
                             
                         </div>
