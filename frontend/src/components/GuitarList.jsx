@@ -11,23 +11,25 @@ function GuitarList() {
     if (error) return <div>Error: {error}</div>
 
     return (
-        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {guitars.map(guitar => (
-                <div key={guitar.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                    <Link to={`/guitars/${guitar.id}`}>
-                        {guitar.primary_photo && 
-                            <img src={`http://127.0.0.1:8000${guitar.primary_photo}`}
-                            className="h-48 w-96 object-cover rounded"
-                            alt={`${guitar.brand} ${guitar.model}`}/>}
-                    </Link>
-                    <div className="p-5">
+        <div className="pt-10">
+            <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {guitars.map(guitar => (
+                    <div key={guitar.id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                         <Link to={`/guitars/${guitar.id}`}>
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{guitar.brand} {guitar.model}</h5>
-                        </Link>   
-                    </div>                
-                </div>
-            ))}
-        </ul>
+                            {guitar.primary_photo && 
+                                <img src={`http://127.0.0.1:8000${guitar.primary_photo}`}
+                                className="h-48 w-96 object-cover rounded"
+                                alt={`${guitar.brand} ${guitar.model}`}/>}
+                        </Link>
+                        <div className="p-5">
+                            <Link to={`/guitars/${guitar.id}`}>
+                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{guitar.brand} {guitar.model}</h5>
+                            </Link>   
+                        </div>                
+                    </div>
+                ))}
+            </ul>
+        </div>
     );
 }
 

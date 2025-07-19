@@ -104,7 +104,7 @@ function EditGuitarForm() {
         if (formState.success) {
             navigate(`/guitars/${id}`);
         }
-    }, [formState.success, navigate]);
+    }, [formState.success, navigate, id]);
 
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>

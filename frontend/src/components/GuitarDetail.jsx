@@ -23,7 +23,7 @@ import { useState } from 'react'
 function GuitarDetail() {
     const { id } = useParams();
     const url = `${API_BASE_URL}${GUITAR_ENDPOINTS.detail(id)}`;
-    // console.log(url)
+    console.log(url)
     const { data: guitar, loading, error } = useFetch(url);
     const [lightBoxOpen, setLightBoxOpen] = useState(false);
     const [startIndex, setStartIndex] = useState(0);
@@ -113,8 +113,9 @@ function GuitarDetail() {
 
 
                             <section aria-labelledby="details-heading" className="mt-12">
+                                <div className='text-2xl tracking-tight text-white'>Specs</div>
                                 <h2 id="details-heading" className="sr-only">
-                                Specs
+                                    Specs
                                 </h2>
                 
                                 <div className="mt-2">
@@ -135,9 +136,56 @@ function GuitarDetail() {
                                 )}
                             </section>
 
-                            <div className='py-6'>
+                            <section aria-labelledby="details-heading" className="mt-12">
+                                <div className='text-2xl tracking-tight text-white'>String Change History</div>
+                                <table className="min-w-full divide-y divide-gray-200">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-white sm:pl-0">
+                                        Tuning
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                                        Strings
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                                        Gauge
+                                        </th>
+                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                                        Date
+                                        </th>
+                                         <th scope="col" className="relative py-3.5 pr-4 pl-3 text-right sm:pr-0">
+                                            <Link to={`/guitars/${id}/add_string_change`} className="inline-block">
+                                                <PlusIcon className="size-6 text-indigo-400 hover:text-indigo-300"/>
+                                            </Link>
+                                        </th>
+                                        {/* <th scope="col" className="relative py-3.5 pr-4 pl-3 sm:pr-0">
+                                        <span className="sr-only">Edit</span>
+                                        </th> */}
+                                    </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                    {guitar.setup_history?.map((setup) => (
+                                        <tr key={setup.id}>
+                                        <td className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-300 sm:pl-0">
+                                            {setup.tuning}
+                                        </td>
+                                        <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-300">{setup.string_brand}</td>
+                                        <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-300">{setup.string_gauge}</td>
+                                        <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-300">{setup.string_change_date}</td>
+                                        <td className="relative py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
+                                            <Link to="#" className="text-indigo-400 hover:text-indigo-300">
+                                            Edit<span className="sr-only">, {setup.tuning}</span>
+                                            </Link>
+                                        </td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </section>
+
+                            {/* <div className='py-6'>
                                 <SetupTable />
-                            </div>
+                            </div> */}
                             
                             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex pt-6 justify-end">
                                 <DeleteGuitar

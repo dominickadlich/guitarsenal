@@ -9,12 +9,15 @@ function useFetch(url) {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log('useFetch: Starting fetch for URL:', url);
             try {
                 const response = await axios.get(`${url}`);
-                console.log('API Response:', response.data);
+                console.log('useFetch: Success response:', response.data);
                 setData(response.data);
                 setLoading(false)
             } catch (err) {
+                console.error('useFetch: Error occurred:', err);
+                console.error('useFetch: Error response:', err.response);
                 setError(`Failed to load guitar details`);
                 setLoading(false);
             }
