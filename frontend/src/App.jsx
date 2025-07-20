@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import NewGuitarForm from "./components/NewGuitarForm";
 import EditGuitarForm from "./components/EditGuitarForm";
 import AddStringChange from "./components/AddStringChange";
+import EditStringChange from "./components/EditStringChange";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/guitars/new" element={<NewGuitarForm />} />
               <Route path="/guitars/:id/edit" element={<EditGuitarForm />} />
               <Route path="/guitars/:id/add_string_change" element={<AddStringChange />} />
+              <Route path="/guitars/:id/edit_string_change" element={<EditStringChange />} />
               <Route path="/guitars/:id" element={<GuitarDetail />} />
             </Routes>
           </main>
