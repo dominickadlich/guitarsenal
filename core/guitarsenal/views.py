@@ -40,3 +40,8 @@ class GuitarPictures(generics.ListCreateAPIView):
         guitar_pk = self.kwargs['pk']
         guitar = Guitar_Model.objects.get(pk=guitar_pk)
         serializer.save(guitar=guitar)
+
+
+class GuitarSetupDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Current_Setup.objects.all()
+    serializer_class = CurrentSetupSerializer
