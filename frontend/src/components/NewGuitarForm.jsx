@@ -93,7 +93,7 @@ function NewGuitarForm() {
 
     useEffect(() => {
         if (formState.success) {
-            navigate('/guitars');
+            navigate('/guitars/');
         }
     }, [formState.success, navigate]);
 

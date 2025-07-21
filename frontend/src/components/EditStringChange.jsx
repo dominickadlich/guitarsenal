@@ -4,7 +4,8 @@ import useFetch from "./useFetch";
 import { useActionState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import InputGroup from "./InputGroup";
+import SubmitButton from "./SubmitButton";
 
 const stringChangeFormFields = [
         {
@@ -44,6 +45,7 @@ const stringChangeFormFields = [
 
 async function updateStringChangeDetails(prevState, formData) {
     const guitarId = formData.get('guitarId');
+    const setupId = formData.get('setupId');
     const url = `${API_BASE_URL}${GUITAR_ENDPOINTS.setup(guitarId)}`;
 
     const stringChangeDetail = {
@@ -70,7 +72,10 @@ async function updateStringChangeDetails(prevState, formData) {
     }
 
     try {
-        const stringChangeResponse = await axios.put(`${API_BASE_URL}${GUITAR_ENDPOINTS.setup(guitarId)}`, stringChangeDetail)
+    const stringChangeResponse = await axios.put(
+                `${API_BASE_URL}/guitars/${guitarId}/setup/${setupId}/`, 
+                stringChangeDetail
+            );
 
         return { success: true };
     } catch (error) {
@@ -84,8 +89,8 @@ async function updateStringChangeDetails(prevState, formData) {
 
 function EditStringChange() {
     const { guitarId, setupId } = useParams();
-    const url = `${API_BASE_URL}/guitars/${guitarId}/setup/${setupId}`;
-    const { data: guitar, loading, error } = useFetch(url);
+    const url = `${API_BASE_URL}/guitars/${guitarId}/setup/${setupId}/`;
+    const { data: setup, loading, error } = useFetch(url);
 
     const navigate = useNavigate();
     const [formState, formAction] = useActionState(updateStringChangeDetails, {
@@ -94,25 +99,26 @@ function EditStringChange() {
 
     useEffect(() => {
         if (formState.success) {
-            navigate(`/guitars/${id}`);
+            navigate(`/guitars/${guitarId}`);
         }
-    }, [formState.success, navigate, id]);
+    }, [formState.success, navigate, guitarId]);
 
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
-    if (!guitar || !guitar.id) return <div>Guitar not found</div>;
+    if (!setup) return <div>Guitar not found</div>;
 
     return (
          <>
             <div className="flex justify-center">
                 <form action={formAction}>
                     <div className="grid grid-cols-1 gap-6">
-                    <input type="hidden" name="guitarId" value={id} />
+                    <input type="hidden" name="guitarId" value={guitarId} />
+                    <input type="hidden" name="setupId" value={setupId} />
                         {stringChangeFormFields.map((field) => (
                             <div key={field.id}>
                                 <InputGroup 
                                     {...field}
-                                    defaultValue={guitar[field.name] || ''}
+                                    defaultValue={setup[field.name] || ''}
                                     error={formState.errors?.[field.name]}
                                 />
                             </div>

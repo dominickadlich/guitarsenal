@@ -173,7 +173,7 @@ function GuitarDetail() {
                                         <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-300">{setup.string_gauge}</td>
                                         <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-300">{setup.string_change_date}</td>
                                         <td className="relative py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
-                                            <Link to={`/guitars/${id}/edit_string_change`} className="text-indigo-400 hover:text-indigo-300">
+                                            <Link to={`/guitars/${id}/setup/${setup.id}`} className="text-indigo-400 hover:text-indigo-300">
                                             Edit<span className="sr-only">, {setup.tuning}</span>
                                             </Link>
                                         </td>

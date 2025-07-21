@@ -23,7 +23,7 @@ function App() {
               <Route path="/guitars/new" element={<NewGuitarForm />} />
               <Route path="/guitars/:id/edit" element={<EditGuitarForm />} />
               <Route path="/guitars/:id/add_string_change" element={<AddStringChange />} />
-              <Route path="/guitars/:id/edit_string_change" element={<EditStringChange />} />
+              <Route path="/guitars/:guitarId/setup/:setupId" element={<EditStringChange />} />
               <Route path="/guitars/:id" element={<GuitarDetail />} />
             </Routes>
           </main>
