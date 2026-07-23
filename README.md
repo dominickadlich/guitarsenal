@@ -1,4 +1,4 @@
-# 🎸 Guitarsenal 🎸
+# 🎸 Guitarsenal  🎸
 
 A full-stack guitar collection manager for tracking instruments, string setups, and maintenance history — built with Django REST Framework and React.
 
@@ -27,7 +27,10 @@ Built end-to-end as a full-stack exercise outside a clinical context — a REST 
 
 ## Screenshots
 
-*(Add a screenshot or short demo GIF here.)*
+<img width="1565" height="717" alt="Screenshot 2026-07-22 at 10 17 12 PM" src="https://github.com/user-attachments/assets/c262fe83-9acb-44c2-b7b9-1cdaf2f4e6e5" />
+
+<img width="1301" height="963" alt="Screenshot 2026-07-22 at 10 16 53 PM" src="https://github.com/user-attachments/assets/36f0de08-fcf7-46fc-8ba4-bcc73fabbd75" />
+
 
 ## License
 
