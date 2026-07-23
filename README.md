@@ -1,4 +1,4 @@
-# 🎸 Guitarsenal  🎸
+# 🎸 Guitarsenal
 
 A full-stack guitar collection manager for tracking instruments, string setups, and maintenance history — built with Django REST Framework and React.
 
